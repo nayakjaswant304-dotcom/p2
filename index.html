@@ -118,15 +118,33 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 input[type=range]:hover::-webkit-slider-thumb,input[type=range]:active::-webkit-slider-thumb{transform:scale(1.18)}
 .status{font-size:.76rem;color:var(--muted);min-height:1.2em}.status.err{color:#ff8a9e}
 
-/* placeholders */
-.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;min-height:400px;text-align:center;padding:40px}
-.ph p{max-width:460px;font-size:1.08rem;font-weight:600;color:var(--text)}
-.spin{width:78px;height:78px;border-radius:50%;border:2px solid rgba(255,255,255,.08);border-top-color:var(--amber);border-right-color:rgba(255,180,84,.35);animation:spin 4s linear infinite;box-shadow:0 0 30px rgba(255,180,84,.15)}
-.spin.rev{width:44px;height:44px;border-top-color:var(--cyan);border-right-color:rgba(94,231,255,.35);animation-direction:reverse;box-shadow:0 0 24px rgba(94,231,255,.15)}
-@keyframes spin{to{transform:rotate(360deg)}}
-.px{display:grid;grid-template-columns:repeat(8,22px);gap:4px}
-.px span{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,.04);border:1px solid var(--edge);animation:breathe-dot 4s ease-in-out infinite;animation-delay:calc(var(--k)*90ms)}
 
+/* tools */
+.tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+.btn{border:1px solid var(--edge);background:rgba(255,255,255,.04);color:var(--text);font-weight:600;font-size:.85rem;padding:9px 18px;border-radius:999px;transition:all .25s ease-out}
+.btn:hover{border-color:rgba(255,255,255,.22);transform:translateY(-1px);background:rgba(255,255,255,.07)}
+.btn:active{transform:scale(.97)}
+.btn.on{color:var(--amber);border-color:rgba(255,180,84,.4);background:rgba(255,180,84,.09)}
+.btn.pri{color:#1a1204;border:0;background:linear-gradient(180deg,#ffc477,#f0a037);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 20px -8px rgba(255,180,84,.6)}
+.sp{flex:1}.cnt{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.stage{padding:18px}
+#pcv{display:block;width:100%;height:min(62vh,520px);border-radius:16px;background:#07080d;touch-action:none;cursor:crosshair;border:1px solid var(--edge)}
+.pix-wrap{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
+#pxc{width:min(100%,560px);aspect-ratio:1;border-radius:12px;touch-action:none;cursor:crosshair;border:1px solid var(--edge);background:#07080d}
+.side{flex:1;min-width:230px;display:flex;flex-direction:column;gap:16px}
+.pal{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-top:8px}
+.sw{aspect-ratio:1;border-radius:8px;border:2px solid transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);transition:transform .2s ease-out,border-color .2s ease-out,box-shadow .2s ease-out}
+.sw:hover{transform:scale(1.12)}.sw.on{border-color:#fff;box-shadow:0 0 14px rgba(255,255,255,.35)}
+.lbl{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:8px}
+input[type=color]{width:44px;height:36px;border:1px solid var(--edge);border-radius:10px;background:none;padding:2px;cursor:pointer}
+
+/* extra scroll effects */
+.hero-card{translate:0 calc(var(--sy,0)*.16px);opacity:max(0,calc(1 - var(--sy,0)/700))}
+#toTop{position:fixed;right:22px;bottom:22px;z-index:60;width:46px;height:46px;border-radius:50%;border:1px solid var(--edge);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--depth);color:var(--amber);font-size:1.1rem;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .3s ease-out,transform .3s ease-out,border-color .25s ease-out}
+#toTop.show{opacity:1;transform:none;pointer-events:auto}
+#toTop.show:hover{border-color:rgba(255,180,84,.5);transform:translateY(-3px)}
+@media(prefers-reduced-motion:reduce){.hero-card{translate:none;opacity:1}}
 @media(max-width:820px){header{flex-wrap:wrap;justify-content:center;padding:12px 16px}nav{order:3;width:100%;justify-content:center}.hero{padding-top:56px}.hero-card{padding:38px 22px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}.orb{display:none}.reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
 </style>
@@ -163,8 +181,8 @@ input[type=range]:hover::-webkit-slider-thumb,input[type=range]:active::-webkit-
       <h2 class="h2 reveal">Your three tools</h2>
       <div class="grid3">
         <div class="reveal" style="--d:0s"><button class="tool glass tilt" data-tab="mixer"><span class="ico">🎧</span><h3>Soundscape Mixer</h3><p>Blend rain, synthwave, café ambience and keystrokes into a focus soundtrack with a live visualizer.</p><span class="tag">Live now</span></button></div>
-        <div class="reveal" style="--d:.12s"><button class="tool glass tilt" data-tab="particles"><span class="ico">✨</span><h3>Particle Sandbox</h3><p>A physics canvas where you shape gravity, swarms and glowing trails in real time.</p><span class="tag">Phase 2</span></button></div>
-        <div class="reveal" style="--d:.24s"><button class="tool glass tilt" data-tab="pixel"><span class="ico">🎨</span><h3>Pixel Art Studio</h3><p>Draw sprites and scenes on a crisp raster grid and export them for your games.</p><span class="tag">Phase 3</span></button></div>
+        <div class="reveal" style="--d:.12s"><button class="tool glass tilt" data-tab="particles"><span class="ico">✨</span><h3>Particle Sandbox</h3><p>A physics canvas where you shape gravity, swarms and glowing trails in real time.</p><span class="tag">Live now</span></button></div>
+        <div class="reveal" style="--d:.24s"><button class="tool glass tilt" data-tab="pixel"><span class="ico">🎨</span><h3>Pixel Art Studio</h3><p>Draw sprites and scenes on a crisp raster grid and export them for your games.</p><span class="tag">Live now</span></button></div>
       </div>
     </section>
 
@@ -183,15 +201,35 @@ input[type=range]:hover::-webkit-slider-thumb,input[type=range]:active::-webkit-
       <div class="mixer" id="mixer"></div>
     </section>
     <section class="panel" id="panel-particles">
-      <div class="head rise"><h2>Particle Sandbox</h2></div>
-      <div class="ph glass rise" style="--d:.1s"><div class="spin"></div><p>Particle Core Disengaged. Initializing Phase 2 Physics Canvas Layer...</p></div>
+      <div class="head rise"><h2>Particle Sandbox</h2><p>Click or drag to spawn neon particles. Flick the cursor to throw them.</p></div>
+      <div class="stage glass rise" style="--d:.1s">
+        <div class="tools">
+          <button class="btn pri" id="pBurst">Burst</button>
+          <button class="btn on" id="pGrav" aria-pressed="true">Gravity: On</button>
+          <button class="btn" id="pRep" aria-pressed="false">Repel: Off</button>
+          <button class="btn" id="pClear">Clear</button>
+          <span class="sp"></span><span class="cnt" id="pCnt">0 particles</span>
+        </div>
+        <canvas id="pcv" aria-label="Particle physics canvas"></canvas>
+      </div>
     </section>
     <section class="panel" id="panel-pixel">
-      <div class="head rise"><h2>Pixel Art Studio</h2></div>
-      <div class="ph glass rise" style="--d:.1s"><div class="px" id="px"></div><div class="spin rev"></div><p>Matrix Studio Standby. Initializing Phase 3 Pixel Raster Processing Grid...</p></div>
+      <div class="head rise"><h2>Pixel Art Studio</h2><p>Pick a color and drag across the grid to paint.</p></div>
+      <div class="stage glass rise" style="--d:.1s"><div class="pix-wrap">
+        <canvas id="pxc" width="640" height="640" aria-label="Pixel drawing grid"></canvas>
+        <div class="side">
+          <div><div class="lbl">Tool</div><div class="row"><button class="btn on" id="tPen">Pen</button><button class="btn" id="tEr">Eraser</button></div></div>
+          <div><div class="lbl">Palette</div><div class="pal" id="pal"></div></div>
+          <div class="row" style="margin:0"><span class="lbl">Custom</span><input type="color" id="pcol" value="#ffb454" aria-label="Custom color"></div>
+          <div><div class="lbl">Grid</div><div class="row"><button class="btn on" id="g16">16×16</button><button class="btn" id="g32">32×32</button></div></div>
+          <div class="row" style="margin:0"><button class="btn" id="pxClear">Clear Grid</button><button class="btn pri" id="pxSave">Download PNG</button></div>
+        </div>
+      </div></div>
     </section>
   </main>
 </div>
+
+<button id="toTop" aria-label="Back to top">↑</button>
 
 <script>
 (() => {
@@ -210,10 +248,12 @@ input[type=range]:hover::-webkit-slider-thumb,input[type=range]:active::-webkit-
   /* ---------- State machine: home <-> studio ---------- */
   const home = $('#home'), studio = $('#studio');
   let current = 'mixer', inStudio = false;
+  let tabHook = () => {};
   const setTab = name => {
     current = name;
     $$('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
     $$('.tab-link').forEach(t => t.classList.toggle('active', inStudio && t.dataset.tab === name));
+    tabHook(inStudio ? name : null);
   };
   const openStudio = tab => {
     if (tab) current = tab;
@@ -231,6 +271,7 @@ input[type=range]:hover::-webkit-slider-thumb,input[type=range]:active::-webkit-
   const openHome = () => {
     if (!inStudio) return;
     inStudio = false;
+    tabHook(null);
     studio.classList.remove('in');
     setTimeout(() => {
       studio.classList.remove('show');
@@ -245,11 +286,9 @@ input[type=range]:hover::-webkit-slider-thumb,input[type=range]:active::-webkit-
   $('#logo').addEventListener('click', openHome);
   $$('.tab-link,.tool').forEach(b => b.addEventListener('click', () => openStudio(b.dataset.tab)));
   $('#yr').textContent = new Date().getFullYear();
-  const px = $('#px');
-  for (let i = 0; i < 48; i++) { const s = document.createElement('span'); s.style.setProperty('--k', i % 12); px.appendChild(s); }
 
   /* ---------- Scroll effects: reveal, progress, compact header, parallax ---------- */
-  const root = document.documentElement, hdr = $('header'), prog = $('#prog');
+  const root = document.documentElement, hdr = $('header'), prog = $('#prog'), topBtn = $('#toTop');
   const io = 'IntersectionObserver' in window
     ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .15, rootMargin: '0px 0px -40px 0px'})
     : null;
@@ -264,10 +303,12 @@ input[type=range]:hover::-webkit-slider-thumb,input[type=range]:active::-webkit-
       root.style.setProperty('--sy', y.toFixed(0));
       prog.style.setProperty('--s', max > 0 ? (y / max).toFixed(4) : 0);
       hdr.classList.toggle('compact', y > 24);
+      topBtn.classList.toggle('show', y > 600);
     });
   };
   window.addEventListener('scroll', onScroll, {passive: true});
   window.addEventListener('resize', onScroll);
+  topBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
   onScroll();
 
   /* ---------- Hero subtitle rotator ---------- */
@@ -402,6 +443,159 @@ input[type=range]:hover::-webkit-slider-thumb,input[type=range]:active::-webkit-
       }
     };
   };
+
+  /* ---------- Particle Sandbox ---------- */
+  const pc = $('#pcv'), pctx = pc.getContext('2d'), pCnt = $('#pCnt');
+  const PBG = '#07080d';
+  let PW = 0, PH = 0, parts = [], grav = true, rep = false, hue = 190, pRun = false, pLast = 0, pRaf = 0;
+  const ptr = {x: 0, y: 0, px: 0, py: 0, down: false, in: false};
+  const pFit = () => {
+    const r = pc.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+    PW = r.width; PH = r.height; pc.width = PW * d; pc.height = PH * d;
+    pctx.setTransform(d, 0, 0, d, 0, 0); pctx.fillStyle = PBG; pctx.fillRect(0, 0, PW, PH);
+  };
+  window.addEventListener('resize', () => { PW = 0; });
+  const spawn = (x, y, vx, vy, h) => {
+    if (parts.length >= 700) parts.shift();
+    parts.push({x, y, ox: x, oy: y, vx, vy, h: h === undefined ? hue : h, life: 1, r: 1.5 + Math.random() * 2.5});
+  };
+  const pPos = e => { const r = pc.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  pc.addEventListener('pointerdown', e => {
+    pc.setPointerCapture(e.pointerId);
+    const p = pPos(e); ptr.x = ptr.px = p[0]; ptr.y = ptr.py = p[1]; ptr.down = true; ptr.in = true;
+    for (let i = 0; i < 10; i++) { const a = Math.random() * 6.283, v = 40 + Math.random() * 160; spawn(ptr.x, ptr.y, Math.cos(a) * v, Math.sin(a) * v); }
+  });
+  pc.addEventListener('pointermove', e => {
+    const p = pPos(e); ptr.x = p[0]; ptr.y = p[1]; ptr.in = true;
+    if (ptr.down) {
+      const vx = (ptr.x - ptr.px) * 8, vy = (ptr.y - ptr.py) * 8;
+      for (let i = 0; i < 3; i++) spawn(ptr.x, ptr.y, vx + (Math.random() - .5) * 120, vy + (Math.random() - .5) * 120);
+    }
+    ptr.px = ptr.x; ptr.py = ptr.y;
+  });
+  const pUp = () => { ptr.down = false; };
+  pc.addEventListener('pointerup', pUp); pc.addEventListener('pointercancel', pUp);
+  pc.addEventListener('pointerleave', () => { ptr.in = false; });
+
+  const pStep = ts => {
+    pRaf = 0;
+    if (!pRun) return;
+    pRaf = requestAnimationFrame(pStep);
+    const dt = Math.min(.033, (ts - pLast) / 1000 || .016); pLast = ts;
+    if (!PW) pFit();
+    hue = (hue + dt * 30) % 360;
+    pctx.globalCompositeOperation = 'source-over'; pctx.fillStyle = 'rgba(7,8,13,.2)'; pctx.fillRect(0, 0, PW, PH);
+    pctx.globalCompositeOperation = 'lighter'; pctx.lineCap = 'round'; pctx.shadowBlur = 8;
+    const damp = Math.pow(.55, dt);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      if (rep && ptr.in) {
+        const dx = p.x - ptr.x, dy = p.y - ptr.y, d = Math.hypot(dx, dy) || 1;
+        if (d < 150) { const f = (1 - d / 150) * 2600 * dt; p.vx += dx / d * f; p.vy += dy / d * f; }
+      }
+      if (grav) p.vy += 720 * dt;
+      p.vx *= damp; p.vy *= grav ? Math.pow(.8, dt) : damp;
+      p.ox = p.x; p.oy = p.y; p.x += p.vx * dt; p.y += p.vy * dt;
+      if (p.x < 0) { p.x = 0; p.vx *= -.8; } else if (p.x > PW) { p.x = PW; p.vx *= -.8; }
+      if (p.y > PH) { p.y = PH; p.vy *= -.72; p.vx *= .96; } else if (p.y < 0) { p.y = 0; p.vy *= -.8; }
+      p.life -= dt / 14; p.h = (p.h + dt * 25) % 360;
+      if (p.life <= 0) { parts.splice(i, 1); continue; }
+      pctx.strokeStyle = `hsla(${p.h | 0},100%,60%,${Math.min(1, p.life * 1.5)})`;
+      pctx.shadowColor = `hsl(${p.h | 0},100%,60%)`; pctx.lineWidth = p.r;
+      pctx.beginPath(); pctx.moveTo(p.ox, p.oy); pctx.lineTo(p.x + .01, p.y); pctx.stroke();
+    }
+    pctx.shadowBlur = 0; pCnt.textContent = parts.length + ' particles';
+  };
+  const particlesRun = on => {
+    pRun = on;
+    if (on && !pRaf) { PW = 0; pLast = performance.now(); pRaf = requestAnimationFrame(pStep); }
+  };
+  const flag = (btn, on, text) => { btn.classList.toggle('on', on); btn.setAttribute('aria-pressed', on); btn.textContent = text; };
+  $('#pGrav').addEventListener('click', e => { grav = !grav; flag(e.currentTarget, grav, 'Gravity: ' + (grav ? 'On' : 'Off')); });
+  $('#pRep').addEventListener('click', e => { rep = !rep; flag(e.currentTarget, rep, 'Repel: ' + (rep ? 'On' : 'Off')); });
+  $('#pBurst').addEventListener('click', () => {
+    if (!PW) pFit();
+    for (let i = 0; i < 140; i++) {
+      const a = i / 140 * 6.283 + Math.random() * .2, v = 150 + Math.random() * 450;
+      spawn(PW / 2, PH / 2, Math.cos(a) * v, Math.sin(a) * v, (hue + i * 2.5) % 360);
+    }
+  });
+  $('#pClear').addEventListener('click', () => {
+    parts = []; pctx.globalCompositeOperation = 'source-over'; pctx.fillStyle = PBG; pctx.fillRect(0, 0, PW, PH);
+  });
+  tabHook = name => particlesRun(name === 'particles');
+
+  /* ---------- Pixel Art Studio ---------- */
+  const xc = $('#pxc'), xctx = xc.getContext('2d'), SZ = xc.width;
+  const PAL = ['#ffb454','#ff6b6b','#ff4fa3','#b86bff','#5b7cff','#5ee7ff','#3ef2b0','#b6f24a','#fff3de','#c9ccd8','#7d8197','#3a3d52','#12131c','#8a5a2b','#e8b896','#ffffff'];
+  let gs = 16, cells = new Array(gs * gs).fill(null), pen = PAL[0], erase = false, drawing = false, lastCell = null;
+  const render = () => {
+    const c = SZ / gs;
+    xctx.fillStyle = PBG; xctx.fillRect(0, 0, SZ, SZ);
+    for (let y = 0; y < gs; y++) for (let x = 0; x < gs; x++) {
+      if ((x + y) % 2 === 0) { xctx.fillStyle = 'rgba(255,255,255,.025)'; xctx.fillRect(x * c, y * c, c, c); }
+      const col = cells[y * gs + x];
+      if (col) { xctx.fillStyle = col; xctx.fillRect(x * c, y * c, c, c); }
+    }
+    xctx.strokeStyle = 'rgba(255,255,255,.07)'; xctx.lineWidth = 1; xctx.beginPath();
+    for (let k = 0; k <= gs; k++) { const v = Math.min(SZ - .5, Math.round(k * c) + .5); xctx.moveTo(v, 0); xctx.lineTo(v, SZ); xctx.moveTo(0, v); xctx.lineTo(SZ, v); }
+    xctx.stroke();
+  };
+  const cellAt = e => {
+    const r = xc.getBoundingClientRect(), cl = v => Math.min(gs - 1, Math.max(0, Math.floor(v * gs)));
+    return [cl((e.clientX - r.left) / r.width), cl((e.clientY - r.top) / r.height)];
+  };
+  const paint = (x, y) => { cells[y * gs + x] = erase ? null : pen; };
+  const line = (a, b) => {          /* Bresenham, so fast drags leave no gaps */
+    let x0 = a[0], y0 = a[1];
+    const x1 = b[0], y1 = b[1], dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+    let err = dx + dy;
+    for (;;) {
+      paint(x0, y0);
+      if (x0 === x1 && y0 === y1) break;
+      const e2 = 2 * err;
+      if (e2 >= dy) { err += dy; x0 += sx; }
+      if (e2 <= dx) { err += dx; y0 += sy; }
+    }
+  };
+  xc.addEventListener('pointerdown', e => {
+    xc.setPointerCapture(e.pointerId); drawing = true; lastCell = cellAt(e); line(lastCell, lastCell); render();
+  });
+  xc.addEventListener('pointermove', e => {
+    if (!drawing) return;
+    const cur = cellAt(e); line(lastCell, cur); lastCell = cur; render();
+  });
+  const pxUp = () => { drawing = false; };
+  xc.addEventListener('pointerup', pxUp); xc.addEventListener('pointercancel', pxUp);
+
+  const setTool = er => { erase = er; $('#tPen').classList.toggle('on', !er); $('#tEr').classList.toggle('on', er); };
+  $('#tPen').addEventListener('click', () => setTool(false));
+  $('#tEr').addEventListener('click', () => setTool(true));
+  const pal = $('#pal'), pcol = $('#pcol');
+  const pick = (col, sw) => {
+    pen = col; setTool(false); pcol.value = col;
+    $$('.sw', pal).forEach(b => b.classList.toggle('on', b === sw));
+  };
+  PAL.forEach((col, i) => {
+    const b = document.createElement('button');
+    b.className = 'sw' + (i === 0 ? ' on' : ''); b.style.background = col; b.setAttribute('aria-label', 'Color ' + col);
+    b.addEventListener('click', () => pick(col, b)); pal.appendChild(b);
+  });
+  pcol.addEventListener('input', () => pick(pcol.value, null));
+  const setGrid = n => {
+    gs = n; cells = new Array(n * n).fill(null);
+    $('#g16').classList.toggle('on', n === 16); $('#g32').classList.toggle('on', n === 32); render();
+  };
+  $('#g16').addEventListener('click', () => { if (gs !== 16) setGrid(16); });
+  $('#g32').addEventListener('click', () => { if (gs !== 32) setGrid(32); });
+  $('#pxClear').addEventListener('click', () => { cells.fill(null); render(); });
+  $('#pxSave').addEventListener('click', () => {
+    const o = document.createElement('canvas'), k = 16; o.width = o.height = gs * k;
+    const g = o.getContext('2d');
+    cells.forEach((col, i) => { if (col) { g.fillStyle = col; g.fillRect((i % gs) * k, Math.floor(i / gs) * k, k, k); } });
+    const a = document.createElement('a'); a.download = 'cybernexus-pixel-art.png'; a.href = o.toDataURL('image/png'); a.click();
+  });
+  render();
 
   /* ---------- Mixer ---------- */
   const mixer = $('#mixer');
