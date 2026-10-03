@@ -3,7 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CyberNexus Suite</title>
+<title>CyberNexus Suite – Free Soundscape Mixer &amp; Beat Maker</title>
+<meta name="description" content="Mix rain, storm, guitar and flute loops, build beats, draw pixel art and play with particles. Free browser tools, no install needed.">
+<meta name="robots" content="index,follow">
+<meta name="monetag" content="79cdca6b8ca599d7c556009d2c599558">
+<meta name="theme-color" content="#090a0f">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<link rel="canonical" href="https://sound-mixer.onrender.com/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CyberNexus Suite">
+<meta property="og:title" content="CyberNexus Suite – Free Soundscape Mixer &amp; Beat Maker">
+<meta property="og:description" content="Mix rain, storm, guitar and flute loops, build beats, draw pixel art and play with particles. Free browser tools, no install needed.">
+<meta property="og:url" content="https://sound-mixer.onrender.com/">
+<meta property="og:image" content="https://sound-mixer.onrender.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CyberNexus Suite: Soundscape Mixer, Beat Maker, Particle Sandbox and Pixel Art Studio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CyberNexus Suite – Free Soundscape Mixer &amp; Beat Maker">
+<meta name="twitter:description" content="Mix rain, storm, guitar and flute loops, build beats, draw pixel art and play with particles. Free browser tools, no install needed.">
+<meta name="twitter:image" content="https://sound-mixer.onrender.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -201,6 +222,19 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
 .spons:focus-visible{outline:2px solid var(--amber);outline-offset:4px}
 .spons.slim{margin-top:20px;padding:14px 20px}
 @media(max-width:560px){.spons{flex-wrap:wrap}.spons .go{margin-left:0;width:100%;text-align:center}}
+/* legal footer + cookie consent */
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 20px;margin-bottom:10px}
+.flinks a,.flinks button{color:var(--muted);text-decoration:none;background:none;border:0;font:inherit;transition:color .25s ease-out}
+.flinks a:hover,.flinks button:hover{color:var(--amber)}
+#consent{position:fixed;left:20px;bottom:20px;z-index:90;width:min(460px,calc(100vw - 24px));padding:20px 22px;font-size:.85rem;color:var(--muted);transform:translateY(24px);opacity:0;transition:opacity .4s ease-out,transform .4s ease-out}
+#consent h2{font-size:1rem;color:var(--text);margin-bottom:6px;outline:none}
+#consent.show{opacity:1;transform:none}#consent[hidden],#ckPanel[hidden]{display:none}#consent a{color:var(--cyan)}
+#ckPanel{margin-top:12px}
+.ck-opt{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--edge);cursor:pointer}
+.ck-opt b{color:var(--text)}.ck-opt small{display:block;color:var(--muted);font-size:.78rem}
+.ck-opt input{width:20px;height:20px;accent-color:var(--amber);flex:none}
+.ck-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.ck-row .btn{flex:1 1 0;min-width:112px;text-align:center;padding:10px 12px}
+@media(max-width:560px){#consent{left:12px;bottom:12px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}.orb{display:none}.reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -245,11 +279,11 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
       <p class="swipe">Swipe to explore →</p>
     </section>
 
-    <div class="ad glass ad-square reveal" style="--d:0s" aria-label="Sponsored">
+    <div class="ad glass ad-square reveal" style="--d:0s" aria-label="Sponsored" hidden>
       <small>Sponsored</small><div class="ad-slot" id="monetag-square">Monetag ad zone — square</div>
     </div>
   </main>
-  <footer>© <span id="yr"></span> CyberNexus AI. All rights reserved.</footer>
+  <footer><nav class="flinks" aria-label="Legal"><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms &amp; Conditions</a><button id="ckSet" type="button">Cookie settings</button></nav>© <span id="yr"></span> CyberNexus AI. All rights reserved.</footer>
 </div>
 
 <div id="studio" class="view">
@@ -319,6 +353,16 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
   </main>
 </div>
 
+<div id="consent" class="glass" role="dialog" aria-labelledby="ckTitle" aria-describedby="ckText" hidden>
+  <h2 id="ckTitle" tabindex="-1">Your privacy choices</h2>
+  <p id="ckText">We use storage on your device to make the site work and to remember your saved beats. With your permission, sponsored partners may also use cookies for advertising. You can accept, reject or choose, and change your mind at any time. <a href="/privacy.html">Privacy policy</a></p>
+  <div id="ckPanel" hidden>
+    <label class="ck-opt"><span><b>Strictly necessary</b><small>Remembers this choice and your saved beats. Always on.</small></span><input type="checkbox" checked disabled></label>
+    <label class="ck-opt"><span><b>Advertising and partners</b><small>Lets sponsored partners set cookies to show and measure ads.</small></span><input type="checkbox" id="ckAds"></label>
+  </div>
+  <div class="ck-row"><button class="btn" id="ckRej" type="button">Reject all</button><button class="btn" id="ckMan" type="button">Manage choices</button><button class="btn" id="ckAcc" type="button">Accept all</button></div>
+</div>
+
 <button id="toTop" aria-label="Back to top">↑</button>
 
 <script>
@@ -328,7 +372,7 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
   /* Audio sources: edit URLs here. A synth fallback plays if a file fails. */
   const LOOPS = [
     {id:'rain',   name:'Cyber Rain City',       emoji:'🌧️', src:'https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg'},
-    {id:'synth',  name:'Synthwave Grid Cruise', emoji:'🏎️', src:'https://archive.org/download/synthwave-loop/synthwave-loop.mp3'},
+    {id:'synth',  name:'Synthwave Grid Cruise', emoji:'🏎️', src:null},
     {id:'nature', name:'Nature Breeze',         emoji:'🌿', src:null},
     {id:'flute',  name:'Breathy Flute',         emoji:'🎶', src:null},
     {id:'peace',  name:'Peace Drone',           emoji:'🕊️', src:null},
@@ -957,6 +1001,37 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
     const nm = a[i].name; a.splice(i, 1); writeP(a); fillSel(0); msg.textContent = 'Deleted "' + nm + '".';
   });
   syncCtl(); drawWave(); fillSel();
+
+  /* ---------- Cookie consent: banner for visitors in Europe (EU, EEA, UK); ads wait for their choice ---------- */
+  const CK = 'cybernexus.consent.v2', MAX_AGE = 365 * 864e5;
+  const EU_EXTRA = new Set(['Atlantic/Canary', 'Atlantic/Madeira', 'Atlantic/Azores', 'Atlantic/Reykjavik', 'Atlantic/Faroe', 'Arctic/Longyearbyen',
+    'Asia/Nicosia', 'Asia/Famagusta', 'Africa/Ceuta', 'Indian/Reunion', 'Indian/Mayotte', 'America/Martinique', 'America/Guadeloupe', 'America/Cayenne']);
+  const inEurope = (() => {         /* decided in the browser from the device time zone; nothing is sent anywhere. Unknown = treat as Europe. */
+    try { const z = Intl.DateTimeFormat().resolvedOptions().timeZone; return !z || z.indexOf('Europe/') === 0 || EU_EXTRA.has(z); } catch (e) { return true; }
+  })();
+  const banner = $('#consent'), panel = $('#ckPanel'), adsBox = $('#ckAds'), manBtn = $('#ckMan'), consentCbs = [];
+  const getConsent = () => {
+    try { const c = JSON.parse(localStorage.getItem(CK)); return c && Date.now() - c.ts < MAX_AGE ? c : null; } catch (e) { return null; }
+  };
+  const effective = () => getConsent() || (inEurope ? null : {ads: true, implied: true});
+  const openPanel = open => { panel.hidden = !open; manBtn.textContent = open ? 'Save choices' : 'Manage choices'; };
+  const showBanner = () => {
+    const c = effective(); adsBox.checked = !!(c && c.ads); openPanel(false); banner.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => { banner.classList.add('show'); $('#ckTitle').focus(); }));
+  };
+  const setConsent = ads => {
+    const c = {ads: !!ads, ts: Date.now()};
+    try { localStorage.setItem(CK, JSON.stringify(c)); } catch (e) {}
+    banner.classList.remove('show'); setTimeout(() => { banner.hidden = true; }, 400);
+    consentCbs.forEach(f => f(c));
+  };
+  /* To load ad scripts only when allowed, call CyberNexus.onConsent and check c.ads inside the callback. */
+  window.CyberNexus = {consent: effective, region: inEurope ? 'europe' : 'other', onConsent: f => { consentCbs.push(f); const c = effective(); if (c) f(c); }};
+  $('#ckRej').addEventListener('click', () => setConsent(false));
+  $('#ckAcc').addEventListener('click', () => setConsent(true));
+  manBtn.addEventListener('click', () => { if (panel.hidden) openPanel(true); else setConsent(adsBox.checked); });
+  $('#ckSet').addEventListener('click', () => { showBanner(); openPanel(true); });
+  if (inEurope && !getConsent()) setTimeout(showBanner, 900);
 
   /* ---------- Mixer ---------- */
   const mixer = $('#mixer');
