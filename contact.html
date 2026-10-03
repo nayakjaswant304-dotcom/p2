@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact | CyberNexus Suite</title>
+<meta name="description" content="Send feedback, report a bug or ask a question about CyberNexus Suite. Use the contact form.">
+<meta name="robots" content="index,follow">
+<meta name="author" content="Jaswant Nayak">
+<meta name="theme-color" content="#090a0f">
+<link rel="canonical" href="https://sound-mixer.onrender.com/contact.html">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box;margin:0;padding:0}body{background:#090a0f;color:#ecebf0;font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.7;background-image:radial-gradient(60% 40% at 10% 0%,rgba(255,180,84,.12),transparent 70%),radial-gradient(50% 40% at 100% 100%,rgba(94,231,255,.1),transparent 70%)}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 32px;border-bottom:1px solid rgba(255,255,255,.08)}
+a{color:#5ee7ff}.logo{color:#ecebf0;font-weight:800;text-decoration:none}.logo b{color:#ffb454}.back{font-weight:600;text-decoration:none;color:#ffb454}
+main{max-width:640px;margin:0 auto;padding:48px 24px 72px}h1{font-size:2.1rem;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}.lead{color:#c9ccd8;margin-bottom:24px}
+.card{background:linear-gradient(155deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:32px}
+label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8b8fa3;margin:18px 0 6px}label:first-of-type{margin-top:0}
+input,textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#ecebf0;font:inherit;padding:12px 14px;transition:border-color .25s ease-out,box-shadow .25s ease-out}
+textarea{min-height:150px;resize:vertical}input:focus,textarea:focus{outline:none;border-color:rgba(255,180,84,.6);box-shadow:0 0 0 3px rgba(255,180,84,.12)}
+button{margin-top:22px;border:0;border-radius:999px;padding:13px 30px;font:inherit;font-weight:700;color:#1a1204;cursor:pointer;background:linear-gradient(180deg,#ffc477,#f0a037);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 22px -6px rgba(255,180,84,.55);transition:transform .25s ease-out,box-shadow .25s ease-out,opacity .25s}
+button:hover:not(:disabled){transform:translateY(-2px)}button:disabled{opacity:.6;cursor:wait}
+.msg{margin-top:16px;min-height:1.5em;font-weight:600}.msg.ok{color:#3ef2b0}.msg.err{color:#ff8a9e}.note{margin-top:14px;font-size:.82rem;color:#8b8fa3}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+footer{text-align:center;color:#8b8fa3;font-size:.85rem;padding:24px;border-top:1px solid rgba(255,255,255,.08)}footer a{color:#8b8fa3;margin:0 8px}</style>
+</head>
+<body>
+<header><a class="logo" href="/"><b>⬡</b> CyberNexus AI</a><a class="back" href="/">← Back to the studio</a></header>
+<main>
+  <h1>Contact</h1>
+  <p class="lead">Feedback, bug reports, privacy requests or just a question? Send a message and you will get a reply by email.</p>
+  <div class="card">
+    <form id="cf" novalidate>
+      <input type="hidden" name="access_key" value="a7df7745-feda-4c33-8153-963bb9e3a33a">
+      <input type="hidden" name="subject" value="New message from CyberNexus Suite">
+      <input type="hidden" name="from_name" value="CyberNexus Suite">
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label for="name">Your name</label>
+      <input id="name" name="name" type="text" maxlength="80" autocomplete="name" required>
+      <label for="email">Your email</label>
+      <input id="email" name="email" type="email" maxlength="120" autocomplete="email" required>
+      <label for="message">Message</label>
+      <textarea id="message" name="message" maxlength="2000" required></textarea>
+      <button id="send" type="submit">Send message</button>
+      <p id="msg" class="msg" role="status" aria-live="polite"></p>
+      <p class="note">Your message is sent through Web3Forms and used only to reply to you. See the <a href="/privacy.html">Privacy Policy</a>.</p>
+    </form>
+  </div>
+</main>
+<footer><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/contact.html">Contact</a><a href="/">Home</a><br>© 2026 CyberNexus AI. All rights reserved. · Created by Jaswant Nayak</footer>
+<script>
+(() => {
+  'use strict';
+  const form = document.getElementById('cf'), btn = document.getElementById('send'), msg = document.getElementById('msg');
+  const show = (text, cls) => { msg.textContent = text; msg.className = 'msg ' + cls; };
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (form.elements.botcheck.checked) return;                 /* spam bots tick the hidden box */
+    const name = form.elements.name.value.trim(), email = form.elements.email.value.trim(), text = form.elements.message.value.trim();
+    if (!name || !text) { show('Please fill in your name and message.', 'err'); return; }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { show('Please enter a valid email address.', 'err'); return; }
+    btn.disabled = true; btn.textContent = 'Sending...'; show('', '');
+    try {
+      const data = Object.fromEntries(new FormData(form));
+      const r = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}, body: JSON.stringify(data)
+      });
+      const j = await r.json();
+      if (r.ok && j.success) { show('Thank you! Your message was sent.', 'ok'); form.reset(); }
+      else throw new Error(j.message || 'Request failed');
+    } catch (err) {
+      show('Sorry, your message could not be sent. Please try again in a little while.', 'err');
+    } finally { btn.disabled = false; btn.textContent = 'Send message'; }
+  });
+})();
+</script>
+</body>
+</html>
