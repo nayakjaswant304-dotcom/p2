@@ -1033,6 +1033,16 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
   $('#ckSet').addEventListener('click', () => { showBanner(); openPanel(true); });
   if (inEurope && !getConsent()) setTimeout(showBanner, 900);
 
+  /* Monetag Vignette banner: loads only when advertising is allowed (straight away outside Europe, after opt-in inside Europe) */
+  let vignetteOn = false;
+  window.CyberNexus.onConsent(c => {
+    if (!c.ads || vignetteOn) return;
+    vignetteOn = true;
+    const sc = document.createElement('script');
+    sc.dataset.zone = '11948809'; sc.src = 'https://n6wxm.com/vignette.min.js';
+    (document.body || document.documentElement).appendChild(sc);
+  });
+
   /* ---------- Mixer ---------- */
   const mixer = $('#mixer');
   LOOPS.forEach((l, idx) => {
