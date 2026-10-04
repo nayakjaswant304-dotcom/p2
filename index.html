@@ -372,7 +372,7 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
 <button id="toTop" aria-label="Back to top">↑</button>
 
 <script>
-(() => {
+const cyberNexusBoot = () => {
   'use strict';
 
   /* Audio sources: edit URLs here. A synth fallback plays if a file fails. */
@@ -453,7 +453,7 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
   window.addEventListener('scroll', onScroll, {passive: true});
   window.addEventListener('resize', onScroll);
   topBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
-  onScroll();
+  if (window.scrollY > 0) onScroll();
 
   /* ---------- Hero subtitle rotator ---------- */
   const names = ['Soundscape Mixer', 'Particle Sandbox', 'Pixel Art Studio', 'Beat Maker'], rot = $('#rot');
@@ -1049,8 +1049,14 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
       sc.dataset.zone = '11948809'; sc.src = 'https://n6wxm.com/vignette.min.js';
       (document.body || document.documentElement).appendChild(sc);
     };
-    const later = () => setTimeout(addAd, 1500);   /* keep the ad script out of the page's first load */
-    if (document.readyState === 'complete') later(); else window.addEventListener('load', later, {once: true});
+    const EVENTS = ['pointerdown', 'keydown', 'scroll', 'touchstart'], WAIT_MS = 10000;   /* change WAIT_MS to show the ad sooner or later */
+    const arm = () => {                              /* load the ad on first interaction, or after WAIT_MS */
+      let fired = false;
+      const go = () => { if (fired) return; fired = true; EVENTS.forEach(ev => window.removeEventListener(ev, go)); addAd(); };
+      EVENTS.forEach(ev => window.addEventListener(ev, go, {passive: true}));
+      setTimeout(go, WAIT_MS);
+    };
+    if (document.readyState === 'complete') arm(); else window.addEventListener('load', arm, {once: true});
   });
 
   /* ---------- Mixer ---------- */
@@ -1104,7 +1110,12 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
     mixer.appendChild(card);
   });
   setTab('mixer');
-})();
+};
+/* Start after the first paint so the page shows up sooner; the timer is a safety net for background tabs. */
+let cnStarted = false;
+const cnStart = () => { if (!cnStarted) { cnStarted = true; cyberNexusBoot(); } };
+requestAnimationFrame(() => setTimeout(cnStart, 0));
+setTimeout(cnStart, 1500);
 </script>
 </body>
 </html>
