@@ -30,7 +30,8 @@
 <meta name="twitter:image" content="https://sound-mixer.onrender.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"></noscript>
 <style>
 :root{--bg:#090a0f;--amber:#ffb454;--cyan:#5ee7ff;--text:#ecebf0;--muted:#8b8fa3;--edge:rgba(255,255,255,.08);--ease:cubic-bezier(.2,.7,.2,1);
 --glass:linear-gradient(155deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
@@ -483,7 +484,7 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
   const cv = $('#viz'), cx = cv.getContext('2d'), eqState = $('#eqState');
   const N = 48, lv = new Array(N).fill(0), rnd = Array.from({length: N}, Math.random);
   const levels = {};            /* id -> volume (0..1) for channels that are ON */
-  let W = 0, H = 0, energy = 0, t = 0;
+  let W = 0, H = 0, energy = 0, t = 0, vizOn = false;
   const fit = () => {
     const r = cv.getBoundingClientRect(), d = window.devicePixelRatio || 1;
     W = r.width; H = r.height; cv.width = W * d; cv.height = H * d; cx.setTransform(d, 0, 0, d, 0, 0);
@@ -491,7 +492,7 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
   window.addEventListener('resize', () => { W = 0; });
   const frame = () => {
     requestAnimationFrame(frame);
-    if (!cv.offsetParent) { W = 0; return; }
+    if (!vizOn) { W = 0; return; }
     if (!W) fit();
     t += 0.016;
     const target = Math.min(1, Object.values(levels).reduce((a, v) => a + .35 + v * .5, 0));
@@ -765,7 +766,7 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
   $('#pClear').addEventListener('click', () => {
     parts = []; pctx.globalCompositeOperation = 'source-over'; pctx.fillStyle = PBG; pctx.fillRect(0, 0, PW, PH);
   });
-  tabHook = name => particlesRun(name === 'particles');
+  tabHook = name => { particlesRun(name === 'particles'); vizOn = name === 'mixer'; };
 
   /* ---------- Pixel Art Studio ---------- */
   const xc = $('#pxc'), xctx = xc.getContext('2d'), SZ = xc.width;
@@ -1041,9 +1042,13 @@ nav{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav::-webkit
   window.CyberNexus.onConsent(c => {
     if (!c.ads || vignetteOn) return;
     vignetteOn = true;
-    const sc = document.createElement('script');
-    sc.dataset.zone = '11948809'; sc.src = 'https://n6wxm.com/vignette.min.js';
-    (document.body || document.documentElement).appendChild(sc);
+    const addAd = () => {
+      const sc = document.createElement('script');
+      sc.dataset.zone = '11948809'; sc.src = 'https://n6wxm.com/vignette.min.js';
+      (document.body || document.documentElement).appendChild(sc);
+    };
+    const later = () => setTimeout(addAd, 1500);   /* keep the ad script out of the page's first load */
+    if (document.readyState === 'complete') later(); else window.addEventListener('load', later, {once: true});
   });
 
   /* ---------- Mixer ---------- */
